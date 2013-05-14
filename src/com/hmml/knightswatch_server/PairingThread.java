@@ -36,7 +36,11 @@ public class PairingThread extends Thread {
 				socket2 = server.accept();
 				System.out.println("Accepted connection 2: " + socket2.getInetAddress().toString());
 				
-				GameServer.GameThreads.add( new GameThread(socket1, socket2) );
+				// first param is gameId, 
+				// we use the current position in the GameThreads array as the Id
+				// starts at 0
+				GameThread newGame = new GameThread(GameServer.GameThreads.size(), socket1, socket2);
+				GameServer.GameThreads.add(newGame);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

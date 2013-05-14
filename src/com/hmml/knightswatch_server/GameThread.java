@@ -11,18 +11,16 @@ public class GameThread extends Thread {
 	public enum Player { Black, White }
 	
 	protected static ArrayList<Socket> Watchers;
-	
+
+	private int gameId;
 	private Socket socket1;
 	private Socket socket2;
 
 	private String currentBroadcast;
-	private Player currentPlayer; 
-	// 0 or 1; 
-	// 0 = player 1 = socket 1 = black
-	// 2 = player 2 = socket 2 = white
+	private Player currentPlayer;	
 	
-	
-	public GameThread(Socket socket1, Socket socket2) {
+	public GameThread(int gameId, Socket socket1, Socket socket2) {
+		this.gameId = gameId;
 		this.socket1 = socket1;
 		this.socket2 = socket2;
 	}
@@ -32,9 +30,9 @@ public class GameThread extends Thread {
 	}
 
 	public void run() {
-        System.out.println("Inside Game Thread");        
+        System.out.println("Game " + gameId + " started.");
 
-        // socket 1 = player 1 = black ; starts
+        // Set Starting Player
         currentPlayer = Player.Black;
         currentBroadcast ="";
 	
@@ -44,7 +42,7 @@ public class GameThread extends Thread {
  			Scanner scanner2 = null;
 			PrintStream out2 = null;
 			try {	
-				// make a scanner & printstream out of the socket's I/O streams
+				// init in and out streams
 				scanner1 = new Scanner(socket1.getInputStream());
 				scanner2 = new Scanner(socket2.getInputStream());
 				out1 = new PrintStream(socket1.getOutputStream());
@@ -74,6 +72,10 @@ public class GameThread extends Thread {
 						currentPlayer = Player.Black;
 					}
 					
+					// Broadcast Message to All Players
+					out1.println(currentBroadcast);
+					out2.println(currentBroadcast);
+					
 					// Switch Player Turn
 					
 					// Handle Disconnects
@@ -86,15 +88,6 @@ public class GameThread extends Thread {
 						break;
 					}
 				}
-				
-				// 
-				while(scanner1.hasNext()) {
-					//out1.println(scanner1.nextLine());
-				}
-
-				while(scanner2.hasNext()) {
-					//out1.println(scanner1.nextLine());
-				}	
 				
 			} finally {
 		 		if(scanner1 != null)
@@ -114,7 +107,7 @@ public class GameThread extends Thread {
 	 	} catch (IOException e) {
 			e.printStackTrace();
 		}
-		 	
- 		
+
+		System.out.println("Game " + gameId + " ended."); 
 	}
 }
