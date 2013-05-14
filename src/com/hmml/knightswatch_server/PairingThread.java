@@ -41,6 +41,7 @@ public class PairingThread extends Thread {
 				// starts at 0
 				GameThread newGame = new GameThread(GameServer.GameThreads.size(), socket1, socket2);
 				GameServer.GameThreads.add(newGame);
+				newGame.run();
 				
 			} catch (IOException e) {
 				e.printStackTrace();

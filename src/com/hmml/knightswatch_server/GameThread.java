@@ -47,6 +47,9 @@ public class GameThread extends Thread {
 				scanner2 = new Scanner(socket2.getInputStream());
 				out1 = new PrintStream(socket1.getOutputStream());
 				out2 = new PrintStream(socket2.getOutputStream());
+				
+				out1.println("Black");
+				out2.println("White");
 	
 				while(true){
 					
