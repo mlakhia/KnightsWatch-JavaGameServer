@@ -76,8 +76,6 @@ public class GameThread extends Thread {
 					out1.println(currentBroadcast);
 					out2.println(currentBroadcast);
 					
-					// Switch Player Turn
-					
 					// Handle Disconnects
 					if(scanner1 == null){
 						out2.println("D\n Player 2 Disconnected.");
