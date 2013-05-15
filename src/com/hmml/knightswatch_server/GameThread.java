@@ -30,7 +30,7 @@ public class GameThread extends Thread {
 	}
 
 	public void run() {
-        System.out.println("Game " + gameId + " started.");
+        System.out.println("Game " + gameId + ": started.");
 
         // Set Starting Player
         currentPlayer = Player.Black;
@@ -48,28 +48,28 @@ public class GameThread extends Thread {
 				out1 = new PrintStream(socket1.getOutputStream());
 				out2 = new PrintStream(socket2.getOutputStream());
 				
-				out1.println("Black");
-				out2.println("White");
+				out1.println("Black"); // player 1 - socket 1
+				out2.println("White"); // player 2 - socket 2
 	
 				while(true){
 					
 					// Retrieve Next Action into currentBroadcast
 					if(currentPlayer == Player.Black){ // player 1 - socket 1
 						
-						//while(scanner1.hasNext()) {
-						currentBroadcast = scanner1.nextLine();
-						//break;
-						//}
+						while(scanner1.hasNext()) {
+							currentBroadcast = scanner1.nextLine();
+							break;
+						}
 						
 						// Switch Player Turn
 						currentPlayer = Player.White;
 					}
 					if(currentPlayer == Player.White){ // player 2 - socket 2
 						
-						//while(scanner1.hasNext()) {
-						currentBroadcast = scanner2.nextLine();
-						//break;
-						//}
+						while(scanner1.hasNext()) {
+							currentBroadcast = scanner2.nextLine();
+							break;
+						}
 						
 						// Switch Player Turn
 						currentPlayer = Player.Black;
@@ -80,26 +80,32 @@ public class GameThread extends Thread {
 					out2.println(currentBroadcast);
 					
 					// Handle Disconnects
-					if(scanner1 == null){
-						out2.println("D\n Player 2 Disconnected.");
+					if(scanner1 == null || !scanner1.hasNext()){
+						System.out.println("Game " + gameId + ": connection 2 disconnected"); 
+						out2.println("Player 2 Disconnected.");
 						break;
 					}
-					if(scanner2 == null){
-						out1.println("D\n Player 1 Disconnected.");
+					if(scanner2 == null || !scanner2.hasNext()){
+						System.out.println("Game " + gameId + ": connection 1 disconnected"); 
+						out1.println("Player 1 Disconnected.");
 						break;
 					}
 				}
 				
 			} finally {
-		 		if(scanner1 != null)
+		 		if(scanner1 != null){
+					System.out.println("Game " + gameId + ": scanner1 closed"); 
 		 			scanner1.close();
+		 		}
 		 		if(out1 != null)
 		 			out1.close();
 		 		if(socket1 != null)
 					socket1.close();
 
-		 		if(scanner2 != null)
+		 		if(scanner2 != null){
+					System.out.println("Game " + gameId + ": scanner2 closed"); 
 		 			scanner2.close();
+		 		}
 		 		if(out2 != null)
 		 			out2.close();
 		 		if(socket2 != null)
@@ -109,6 +115,6 @@ public class GameThread extends Thread {
 			e.printStackTrace();
 		}
 
-		System.out.println("Game " + gameId + " ended."); 
+		System.out.println("Game " + gameId + ": ended."); 
 	}
 }

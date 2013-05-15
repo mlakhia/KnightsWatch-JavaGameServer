@@ -33,17 +33,12 @@ public class PairingThread extends Thread {
 			PrintStream out = null;
 			try {
 				socket1 = server.accept();
-				System.out.println("Accepted connection 1: " + socket1.getInetAddress().toString());
-				out = new PrintStream(socket1.getOutputStream());
-				out.println("Black");
+				System.out.println("Accepted connection 1: " + socket1.getInetAddress().toString() + " " + socket1.getInetAddress().getCanonicalHostName());
+
 				socket2 = server.accept();
-				System.out.println("Accepted connection 2: " + socket2.getInetAddress().toString());
-				out = new PrintStream(socket2.getOutputStream());
-				out.println("White");
+				System.out.println("Accepted connection 2: " + socket2.getInetAddress().toString() + " " + socket2.getInetAddress().getCanonicalHostName());
 				
-				// first param is gameId, 
-				// we use the current position in the GameThreads array as the Id
-				// starts at 0
+				// GameThread param[0] is gameId, use current position in GameThreads array as Id
 				GameThread newGame = new GameThread(GameServer.GameThreads.size(), socket1, socket2);
 				GameServer.GameThreads.add(newGame);
 				newGame.start();
