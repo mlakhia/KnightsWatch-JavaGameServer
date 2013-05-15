@@ -53,6 +53,8 @@ public class GameThread extends Thread {
 	
 				while(true){
 					
+					out1.println(currentBroadcast);
+					out2.println(currentBroadcast);
 					// Retrieve Next Action into currentBroadcast
 					if(currentPlayer == Player.Black){ // player 1 - socket 1
 						
@@ -78,8 +80,8 @@ public class GameThread extends Thread {
 
 					System.out.println("Game " + gameId + ": currentBroadcast: "+ currentBroadcast); 
 
-					out1.println(currentBroadcast);
-					out2.println(currentBroadcast);
+					//out1.println(currentBroadcast);
+				//	out2.println(currentBroadcast);
 					
 					// Handle Disconnects
 					if(scanner1 == null || !scanner1.hasNext()){
