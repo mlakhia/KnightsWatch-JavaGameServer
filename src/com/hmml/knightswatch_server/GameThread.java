@@ -63,10 +63,9 @@ public class GameThread extends Thread {
 						
 						// Switch Player Turn
 						currentPlayer = Player.White;
-					}
-					if(currentPlayer == Player.White){ // player 2 - socket 2
+					} else if(currentPlayer == Player.White){ // player 2 - socket 2
 						
-						while(scanner1.hasNext()) {
+						while(scanner2.hasNext()) {
 							currentBroadcast = scanner2.nextLine();
 							break;
 						}
