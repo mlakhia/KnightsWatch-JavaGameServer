@@ -53,8 +53,7 @@ public class GameThread extends Thread {
 	
 				while(true){
 					
-					out1.println(currentBroadcast);
-					out2.println(currentBroadcast);
+
 					// Retrieve Next Action into currentBroadcast
 					if(currentPlayer == Player.Black){ // player 1 - socket 1
 						
@@ -79,12 +78,11 @@ public class GameThread extends Thread {
 					// Broadcast Message to All Players
 
 					System.out.println("Game " + gameId + ": currentBroadcast: "+ currentBroadcast); 
-
-					//out1.println(currentBroadcast);
-				//	out2.println(currentBroadcast);
+					out1.println(currentBroadcast);
+					out2.println(currentBroadcast);
 					
 					// Handle Disconnects
-					if(scanner1 == null || !scanner1.hasNext()){
+					/*if(scanner1 == null || !scanner1.hasNext()){
 						System.out.println("Game " + gameId + ": connection 2 disconnected"); 
 						out2.println("Player 2 Disconnected.");
 						break;
@@ -93,7 +91,7 @@ public class GameThread extends Thread {
 						System.out.println("Game " + gameId + ": connection 1 disconnected"); 
 						out1.println("Player 1 Disconnected.");
 						break;
-					}
+					}*/
 				}
 				
 			} finally {
