@@ -76,6 +76,7 @@ public class GameThread extends Thread {
 					}
 					
 					// Broadcast Message to All Players
+					System.out.println("Broadcast: " + currentBroadcast);
 					out1.println(currentBroadcast);
 					out2.println(currentBroadcast);
 					
