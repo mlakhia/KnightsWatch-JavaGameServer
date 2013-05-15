@@ -16,8 +16,9 @@ public class GameThread extends Thread {
 	private Socket socket1;
 	private Socket socket2;
 
+	private Player currentPlayer;
 	private String currentBroadcast;
-	private Player currentPlayer;	
+	private String previousBroadcast;
 	
 	public GameThread(int gameId, Socket socket1, Socket socket2) {
 		this.gameId = gameId;
@@ -34,7 +35,8 @@ public class GameThread extends Thread {
 
         // Set Starting Player
         currentPlayer = Player.Black;
-        currentBroadcast ="";
+        currentBroadcast = "";
+        previousBroadcast = "-1";
 	
 		try{
  			Scanner scanner1 = null;
@@ -52,7 +54,6 @@ public class GameThread extends Thread {
 				out2.println("White"); // player 2 - socket 2
 	
 				while(true){
-					
 
 					// Retrieve Next Action into currentBroadcast
 					if(currentPlayer == Player.Black){ // player 1 - socket 1
@@ -76,22 +77,23 @@ public class GameThread extends Thread {
 					}
 					
 					// Broadcast Message to All Players
-
 					System.out.println("Game " + gameId + ": currentBroadcast: "+ currentBroadcast); 
 					out1.println(currentBroadcast);
 					out2.println(currentBroadcast);
 					
 					// Handle Disconnects
-					/*if(scanner1 == null || !scanner1.hasNext()){
+					if(scanner1 == null || currentBroadcast.equalsIgnoreCase(previousBroadcast) ){
 						System.out.println("Game " + gameId + ": connection 2 disconnected"); 
 						out2.println("Player 2 Disconnected.");
 						break;
 					}
-					if(scanner2 == null || !scanner2.hasNext()){
+					if(scanner2 == null || currentBroadcast.equalsIgnoreCase(previousBroadcast) ){
 						System.out.println("Game " + gameId + ": connection 1 disconnected"); 
 						out1.println("Player 1 Disconnected.");
 						break;
-					}*/
+					}
+					
+					previousBroadcast = currentBroadcast;
 				}
 				
 			} finally {
