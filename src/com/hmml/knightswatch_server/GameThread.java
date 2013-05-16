@@ -82,14 +82,10 @@ public class GameThread extends Thread {
 					out2.println(currentBroadcast);
 					
 					// Handle Disconnects
-					if(scanner1 == null || currentBroadcast.equalsIgnoreCase(previousBroadcast) ){
-						System.out.println("Game " + gameId + ": connection 2 disconnected"); 
-						out2.println("Player 2 Disconnected.");
-						break;
-					}
-					if(scanner2 == null || currentBroadcast.equalsIgnoreCase(previousBroadcast) ){
-						System.out.println("Game " + gameId + ": connection 1 disconnected"); 
-						out1.println("Player 1 Disconnected.");
+					if(currentBroadcast.equalsIgnoreCase(previousBroadcast) ){
+						System.out.println("Game " + gameId + ": someone disconnected"); 
+						out1.println("Opponent Disconnected.");
+						out2.println("Opponent Disconnected.");
 						break;
 					}
 					
